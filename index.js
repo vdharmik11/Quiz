@@ -1,10 +1,23 @@
 var readLineSync = require('readline-sync');
 var string = require('string');
-console.log('Welcome to the fun quiz about Dharmik....!!');
+var userName = readLineSync.question("What's your name? ");
+console.log("Welcome "+ userName + " to DO YOU KNOW Dharmik?");
+
+
 var count = 0;
 
 var inputy = readLineSync.question('Press \'y\' to start the quiz...')
 var score = 0;
+
+//Data of high score
+var highScores = [
+  {
+    name: "Shubham",
+    score: 7,
+  },
+]
+
+//answer verification
 function ansVerify(question,option,answer)
 {
   console.log(question)
@@ -12,15 +25,33 @@ function ansVerify(question,option,answer)
   {
     console.log(option[i])
   }
-  //console.log(option)
   var ans = readLineSync.question()
   if(ans.toUpperCase() == answer.toUpperCase())
   {
     score = score + 1
-    //console.log(score) 
     return true
   }  
 }
+
+//Displaying score
+function showScores(score)
+{
+  console.log('You have scored '+count+' points');
+  if(count>=5 && count<10)
+  {
+    console.log('Congratulation...You are in level 2.');
+  }
+  else if(count==10)
+  {
+    console.log('Congratulations...You are in level 3.');
+  }
+
+  console.log("Check out the high scores, if you should be there ping me and I'll update it");
+
+  highScores.map(score => console.log(score.name, " : ", score.score))
+}
+
+
 if(inputy.toUpperCase() =='Y')
 {
     var questionArr = [
@@ -126,7 +157,7 @@ if(inputy.toUpperCase() =='Y')
   },
   
 ]
-
+  //function calling for starting quiz
   for(var i = 0; i<questionArr.length; i++)
   {
     var bool = ansVerify(questionArr[i].question,questionArr[i].options,questionArr[i].answer);
@@ -135,13 +166,7 @@ if(inputy.toUpperCase() =='Y')
       count = count + 1;
     }
   }
-  console.log('You have scored '+count+' points');
-  if(count>=5 && count<10)
-    {
-      console.log('Congratulation...You are in level 2.');
-    }
-    else if(count==10)
-    {
-      console.log('Congratulations...You are in level 3.');
-    }
+
+  //function calling for displaying score
+  showScores(count);
 }
